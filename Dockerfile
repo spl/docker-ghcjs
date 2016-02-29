@@ -23,7 +23,7 @@ ENV NODE_VERSION 5.7.0
 
 # Install packages: stack for building ghcjs, other packages for Gtk2Hs
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 575159689BEFB442 && \
-    echo 'deb http://download.fpcomplete.com/ubuntu wily main'|sudo tee /etc/apt/sources.list.d/fpco.list && \
+    echo 'deb http://download.fpcomplete.com/ubuntu wily main'|tee /etc/apt/sources.list.d/fpco.list && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
       curl \
