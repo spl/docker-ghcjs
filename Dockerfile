@@ -21,26 +21,26 @@ RUN set -ex \
 ENV NPM_CONFIG_LOGLEVEL info
 ENV NODE_VERSION 5.7.0
 
-# Download, verify, and install node.js
-RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" && \
-    curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" && \
-    gpg --verify SHASUMS256.txt.asc && \
-    grep " node-v$NODE_VERSION-linux-x64.tar.xz\$" SHASUMS256.txt.asc | sha256sum -c - && \
-    tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 && \
-    rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc
-
-# Install packages: stack for building ghcjs, node for ghcjs, and packages for Gtk2Hs
+# Install packages: stack for building ghcjs, other packages for Gtk2Hs
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 575159689BEFB442 && \
     echo 'deb http://download.fpcomplete.com/ubuntu wily main'|sudo tee /etc/apt/sources.list.d/fpco.list && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
-      nodejs \
+      curl \
       stack \
       libgtk2.0-dev \
       libwebkitgtk-dev \
       libwebkitgtk-3.0-dev && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
+
+# Download, verify, install node.js, and clean up
+RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" && \
+    curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" && \
+    gpg --verify SHASUMS256.txt.asc && \
+    grep " node-v$NODE_VERSION-linux-x64.tar.xz\$" SHASUMS256.txt.asc | sha256sum -c - && \
+    tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 && \
+    rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc
 
 ENV PATH /root/.cabal/bin:/root/.local/bin:/root/.stack/programs/x86_64-linux/ghc-7.10.2/bin:/root/.stack/programs/x86_64-linux/ghcjs-0.1.0.20150924_ghc-7.10.2/bin:$PATH
 
