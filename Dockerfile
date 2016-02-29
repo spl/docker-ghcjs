@@ -26,8 +26,13 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 575159689BEFB442 &&
     echo 'deb http://download.fpcomplete.com/ubuntu wily main'|tee /etc/apt/sources.list.d/fpco.list && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
+      # For Node.js
+      ca-certificates \
       curl \
+      # For Stack
+      libtinfo-dev \
       stack \
+      # For Gtk2Hs
       libgtk2.0-dev \
       libwebkitgtk-dev \
       libwebkitgtk-3.0-dev && \
