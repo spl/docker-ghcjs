@@ -30,6 +30,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 575159689BEFB442 &&
       ca-certificates \
       curl \
       # For Stack
+      libtinfo-dev \
       netbase \
       stack \
       # For Gtk2Hs
