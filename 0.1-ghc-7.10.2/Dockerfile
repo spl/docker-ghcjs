@@ -23,11 +23,12 @@ RUN git clone --depth 1 --branch old-base-ghc-7.10 https://github.com/ghcjs/ghcj
     git submodule update --init && \
     cabal update && \
     cabal install --global --reorder-goals --max-backjumps=-1 --constraint="aeson==0.8.*" . lib/ghcjs-prim && \
-    ghcjs-boot --no-prof --no-haddock --dev --ghcjs-boot-dev-branch old-base-ghc-7.10 --shims-dev-branch old-base-ghc-7.10 && \
+    ghcjs-boot --no-prof --no-haddock --with-datadir /opt/ghcjs --dev --ghcjs-boot-dev-branch old-base-ghc-7.10 --shims-dev-branch old-base-ghc-7.10 && \
     rm -rf \
       /ghcjs \
       /root/.cabal \
-      /root/.ghcjs/x86_64-linux-0.1.0-7.10.2/ghcjs/ghcjs-boot \
+      /root/.ghc \
+      /opt/ghcjs/x86_64-linux-0.1.0-7.10.2/ghcjs/ghcjs-boot \
       /usr/local/ghcjs-boot* \
       /usr/local/share/x86_64-linux-ghc-7.10.2/ghcjs-0.1.0/lib/cache
 
